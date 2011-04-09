@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<h1>Log In</h1>
+<form method="post" action=".">{% csrf_token %}<input type="hidden" name="next" value="{{ next|default:"/" }}" />
+	<table cellpadding="4" cellspacing="1">
+		<tr>
+			<td>Username:</td>
+			<td> 
+				{% if form.errors %}
+				<div style="background-color:#B00;border:2px solid #F00;width:200px;margin-bottom: 10px;padding:3px;text-align:center;">
+					<strong>login failure</strong><br/>
+					login failed, please retry.
+				</div>
+				{% endif %}
+				<input type="text" class="styledform" name="username" id="username" maxlength="255" /> 
+			</td>
+		</tr> 
+		<tr>
+			<td>Password:</td>
+			<td> 
+				<input type="password" class="styledform" name="password" id="password" maxlength="255" /> 
+			</td>
+		</tr> 
+		<tr>
+			<td>&nbsp;</td>
+			<td> 
+				<input type="submit" id="submit-unnamed" name="unnamed" value="Login" class="sub lock" /> 
+			</td>
+		</tr> 
+	</table> 
+	</form>
+</form>
+{% endblock %}
+

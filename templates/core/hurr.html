@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="sidtube.com is your one-stop portal for everything Sleep Is Death related. Sleep is Death is a storytelling game created by Jason Rohrer." />
+	<meta name="keywords" content="sleep is death, sleepisdeath, sidtube, sid, jason rohrer, indie game, indie, game, storytelling game, storytelling, story, flipbook, flipbooks, sleep is death flipbooks, sleep is death mods, sleep is death paks, sleep is death chat, sidtube irc, sidtube chat" />
+	<title>sidtube.com // {% block title %}proudly powered by Django{% endblock %}</title>
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/sidtube.css" type="text/css" media="screen" charset="utf-8" />
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" type="text/css" media="screen" charset="utf-8" />
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/jquery-ui-1.7.1.custom.css" type="text/css" media="screen" charset="utf-8" />
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/ui.slider.extras.css" type="text/css" media="screen" charset="utf-8" />
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.ba-dotimeout.min.js"></script>
+	{% block head_additions %}{% endblock %}
+	<style type="text/css"> 
+	ul.messages {
+		margin: 0;
+		padding: 0;
+		text-align: left;
+		background-color:#FB0;
+	}
+	
+	ul.messages li {
+		list-style-type:none;
+		height: 20px;
+		background-color:#FB0;
+		color: #000;
+		font-size: small;
+	}
+	ul.messages li.error {
+		background: url({{ MEDIA_URL }}images/cross-circle.png) no-repeat left 3px;
+		padding-left: 20px;
+		padding-top: 4px;
+	}
+	ul.messages li.success {
+		background: url({{ MEDIA_URL }}images/tick-circle.png) no-repeat left 3px;
+		padding-left: 20px;
+		padding-top: 4px;
+	}
+	ul.messages li.info {
+		background: url({{ MEDIA_URL }}images/information.png) no-repeat left 3px;
+		padding-left: 20px;
+		padding-top: 4px;
+	}
+	div.databox#content {
+		position: relative;
+		background-color: #000;
+		width: 99%;
+		margin-top: 30px;
+		border-top: 1px solid #000;
+		padding: 0px 5px 5px 5px;
+		text-align: left;
+	}
+	</style>
+</head>
+<body>
+	<div class="databox" id="main" style="padding-top: 20px;">
+		{% if messages %}
+		<div id="notification" style="position:fixed;top:5px;left:200px;width:415px;height:15px;background-color:#FB0;border:2px solid #FA0;z-index:10;padding-top: 10px;padding-bottom:15px;">
+			<ul class="messages">
+				{% for message in messages %}
+					<li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		    	{% endfor %}
+			</ul>
+			<div style="position:absolute;bottom:0px;right:0px;background-color:#FB0;">
+				<a href="javascript:" onClick="$('#notification').fadeOut()"><img src="{{ MEDIA_URL }}images/cross-small.png" style="background-color:#FB0;border:0;"/></a>
+			</div>
+		</div>
+		{% endif %}
+		<div id="logo" style="position:absolute;top:10px;left:10px;" onclick="window.location='/';">
+			<span style="color:red;font-size:28pt;">sid</span><span style="color:white;font-size:28pt;">tube</span>.com
+		</div>
+		<div id="navigation"{%if gamependingsite%} style="display:none;"{%endif%}> 
+			<a href="{% url welcome %}">news</a> <span class="naviseparator">|</span>
+			<a href="{% url games %}">games</a> <span class="naviseparator">|</span>
+			<a href="{% url gallery %}">gallery</a> <span class="naviseparator">|</span>
+			<a href="{% url resources %}">resources</a> <span class="naviseparator">|</span>
+			<a href="" onclick="$('#navigation').slideToggle();$('#navisocial').fadeIn();return false;" style="color:#ee4;">community</a> <span class="naviseparator">|</span>
+			{% if user.is_authenticated %}
+			{% if user.is_staff %}
+			<a href="/admin/">admin</a> <span class="naviseparator">|</span>
+			{% endif %}
+			<a href="{% url about %}">credits</a> <span class="naviseparator">|</span>
+			<a href="" onclick="$('#navigation').slideToggle();$('#navisettings').fadeIn();return false;">{{user.username}}</a>
+			{% else %}
+			<a href="{% url login %}" onclick="$('#navigation').slideToggle();$('#loginregister').fadeIn();return false;">login/register</a>
+			{% endif %}
+		</div>
+		<div id="navisocial" style="display:none;">
+			<a href="{% url forum_index %}">forums</a> <span class="naviseparator">|</span>
+			<a href="http://wiki.sidtube.com/">wiki</a> <span class="naviseparator">|</span>
+			<a href="{% url irc %}">chat</a> <span class="naviseparator">|</span>
+			<a href="{% url about %}">credits</a> <span class="naviseparator">|</span>
+			<a href="" onclick="$('#navisocial').fadeOut();$('#navigation').slideToggle();return false;">back</a>
+		</div>
+		<div id="navisettings" style="display:none;">
+			<a href="{% url pwchange %}">change password</a> <span class="naviseparator">|</span>
+			<a href="{% url logout %}">logout</a> <span class="naviseparator">|</span>
+			<a href="" onclick="$('#navisettings').fadeOut();$('#navigation').slideToggle();return false;">back</a>
+		</div>
+		<div id="loginregister" style="display:none;">
+			<form method="POST" action="{%url login%}">{% csrf_token %}<input type="hidden" name="next" value="/" />
+			<table style="margin:0;">
+				<tr style="margin-bottom: 0px; padding-bottom: 0px;">
+					<td>
+						<input name="username" value="username" onfocus="if(this.value=='username'){this.value = '';};"/>
+					</td>
+					<td>
+						<input type="password" name="password" value="password" onfocus="if(this.value=='password'){this.value = '';};"/>
+					</td>
+					<td>
+						<input type="submit" value="continue" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="{% url registration_register %}" style="font-size: x-small;">register new account</a>
+					</td>
+					<td>
+						<a href="{% url pwreset %}" style="font-size: x-small;">lost password?</a>
+					</td>
+					<td>
+						<a href="" onclick="$('#loginregister').fadeOut();$('#navigation').slideToggle();return false;" style="font-size: x-small;">cancel</a>
+					</td>
+				</tr>
+			</table>
+			</form>
+		</div>
+	<div class="databox" id="content">
+	{% block content %}{% endblock %}
+	</div>
+	{% if messages %}
+	<script type="text/javascript"> 
+		$(document).ready(function(){
+			$.doTimeout(5000, function(){
+				$('#notification').fadeOut(3000);
+			});
+			$('#notification').click(function(){$('#notification').fadeOut(300);});
+		});
+	</script>
+	{% endif %}
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16429865-1']);
+      _gaq.push(['_trackPageview']);
+  (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = 'http://www.google-analytics.com/ga.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+</script>
+</body> 
+</html>
+

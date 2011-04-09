@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>vpnadm</title>
+<style type="text/css">
+td {
+	text-align: center;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+</style>
+</head>
+<body>
+<h1>vpnadm</h1>
+<div id="nav" style="margin-top: -20px;margin-bottom: 20px;font-family:monospace;">
+	<a href="{% url welcome %}">start</a> |
+	{% if request.user.is_staff %}
+	<a href="{% url status %}">status</a> |
+	<a href="/admin/">admin</a> |
+	{% endif %}
+	<a href="{% url pwchange %}">change password</a> |
+	<a href="{% url logout %}">logout</a>
+</div>
+{% block content %}{% endblock %}

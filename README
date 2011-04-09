@@ -1,0 +1,13 @@
+INSTALL:
+
+* move settings-dist.py to settings.py and change contents
+* configure openvpn.conf like this:
+	management localhost 7505 /etc/openvpn/mgmt.txt
+	client-connect /opt/purple/openvpn_connect.py
+	client-disconnect /opt/purple/openvpn_disconnect.py
+	auth-user-pass-verify /opt/purple/openvpn_auth.py via-file
+	script-security 2
+	tmp-dir /dev/shm
+* create mgmt.txt, it should contain the management interface password
+  and nothing else.
+* ./manage.py syncdb, runserver
