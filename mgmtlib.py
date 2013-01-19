@@ -4,15 +4,11 @@ import settings
 
 def connect():
 	tn = telnetlib.Telnet("localhost", 7505, 3)
-	print "hello there"
 	tn.read_until("ENTER PASSWORD:")
-	tn.write(settings.OPENVPN_PASSWORD+"\n") # YAY HARDCODED PASSWORDS
-	print "login sent"
-	hurr = tn.read_some()
-	print "result there"
-	if hurr[:7] != "SUCCESS":
+	tn.write(settings.OPENVPN_PASSWORD+"\n")
+	result = tn.read_some()
+	if result[:7] != "SUCCESS":
 		raise Exception("login failed")
-	print "Login ok"
 	tn.read_until("info\r\n", 3)
 	return tn
 
@@ -26,8 +22,7 @@ def send(tn, command):
 
 def quit(tn):
 	tn.write("quit\n")
-	print "done"
-	tn.close() # free it
+	tn.close()
 
 def parse_status(status):
 	stati = status.split("\r\n")
