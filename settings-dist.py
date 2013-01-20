@@ -19,7 +19,7 @@ OPENVPN_PASSWORD = "change me"
 
 # delete the following three lines and you're done configuring
 import sys
-print "Please configure c4sh in settings.py. Your hostname is %s." % socket.gethostname()
+print "Please configure purple in settings.py."
 sys.exit(0)
 
 if DEBUG:
