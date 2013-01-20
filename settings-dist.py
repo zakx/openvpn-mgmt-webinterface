@@ -25,7 +25,7 @@ sys.exit(0)
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    EMAIL_BACKEND = "purple.sendmail.EmailBackend"
+    EMAIL_BACKEND = "sendmail.EmailBackend"
     SESSION_COOKIE_SECURE = True
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
@@ -71,7 +71,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-ROOT_URLCONF = 'purple.urls'
+ROOT_URLCONF = 'urls'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -82,7 +82,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'purple.app',
+    'app',
     'south',
     'django_extensions',
 )
