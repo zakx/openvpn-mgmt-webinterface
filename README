@@ -1,3 +1,6 @@
+NOTE: This is under heavy development right now (01/2013) and
+may not be usable right now.
+
 INSTALL:
 
 * move settings-dist.py to settings.py and change contents
