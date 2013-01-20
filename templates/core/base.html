@@ -57,51 +57,58 @@
     <nav id="primary">
       <ul>
         <li class="active">
-          <a href="#">
+          <a href="{% url welcome %}">
             <span class="icon32 dashboard"></span>
             Dashboard
           </a>
         </li>
+        {% if request.user.is_staff %}
+        <li>
+          <a href="{% url status %}">
+            <span class="icon32 group"></span>
+            Service Status
+          </a>
+        </li>
+        {% endif %}
         <li>
           <a href="#">
-            <span class="icon32 shuffle"></span>
-            UI Elements
+            <span class="icon32 key"></span>
+            Certficates
           </a>
         </li>
         <li>
           <a href="#">
-            <span class="icon32 pencil"></span>
-            Forms
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="icon32 listicon"></span>
-            Tables
+            <span class="icon32 download"></span>
+            Downloads
           </a>
         </li>
         <li>
           <a href="#">
             <span class="icon32 chart"></span>
-            Charts
+            Statistics
           </a>
         </li>
+        <li>
+          <a href="{% url pwchange %}">
+            <span class="icon32 tools"></span>
+            Settings
+          </a>
+        </li>
+        {% if request.user.is_staff %}
+        <li>
+          <a href="/admin/">
+            <span class="icon32 cog"></span>
+            Backend
+          </a>
+        </li>
+        {% endif %}
         <li class="bottom">
-          <a href="#">
+          <a href="{% url logout %}">
             <span class="icon32 quit"></span>
             Log out
           </a>
         </li>
       </ul>
-    </nav>
-    
-    <!-- Secondary navigation -->
-    <nav id="secondary">
-      
-      <div id="notifications">
-        <ul>
-        </ul>
-      </div>
     </nav>
     
     <section id="maincontainer">
@@ -113,12 +120,3 @@
     </section>
   </body>
 </html>
-{% comment %}
-	<a href="{% url welcome %}">start</a> |
-	{% if request.user.is_staff %}
-	<a href="{% url status %}">status</a> |
-	<a href="/admin/">admin</a> |
-	{% endif %}
-	<a href="{% url pwchange %}">change password</a> |
-	<a href="{% url logout %}">logout</a>
-{% endcomment %}

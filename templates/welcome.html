@@ -1,6 +1,151 @@
 {% extends "core/base.html" %}
 
 {% block content %}
+      <div id="main" class="container_12">    
+        <div class="column-left">
+          <div class="box">
+            <div class="box-header">
+              <h1>Welcome, {{request.user.username}}</h1>
+            </div>
+
+            <div class="box-content">
+              <p>Herp Derp VPN</p>
+
+              <a href="#" class="button tooltip" title="This is a tooltip!">Whatever</a>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-header">
+              <span class="icon16 chart"></span><h1>Statistics</h1>
+            </div>
+        
+            <ul class="statistics">
+              <li>
+                <a href="#">
+                  <span>1234</span>
+                  Total Connections
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span>23</span>
+                  Returning visitors
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span>16%</span>
+                  Bounce rate
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span>7%</span>
+                  Increase since last month
+                </a>
+              </li>
+            </ul>
+        
+            <div class="action_bar">
+              <a href="#" class="button small"><span class="icon16 export"></span>Export data</a>
+              <a href="#" class="button small"><span class="icon16 print"></span>Print statistics</a>
+            </div>
+          </div>
+        
+        </div>
+        
+        <div class="column-right">
+        {% if used_percentage != False %}
+          <div class="box">
+            <div class="box-header">
+              <h1>Monthly Traffic Usage</h1>
+            </div>
+            
+            <div class="box-content">
+              <div class="progressbar {value: {{used_percentage}}}"></div>
+            </div>
+          </div>
+        {% endif %}
+          
+          <div class="box">    
+            <div class="box-header">
+              <h1>Current Plan</h1>
+            </div>
+        
+            <table>
+              <tbody>
+                <tr>
+                  <td>Plan:</td>
+                  <td><strong>VPN Tier 1</strong></td>
+                </tr>
+                <tr>
+                  <td>Traffic used:</td>
+                  <td>{{used|floatformat:0}} MB used</td>
+                </tr>
+                <tr>
+                  <td>Traffic quota:</td>
+                  <td>{{quota|floatformat:0}} MB/month</td>
+                </tr>
+              </tbody>
+            </table>
+        
+            <div class="action_bar">
+              <a href="#" class="button blue">Upgrade plan</a>
+              <a href="#">Cancel subscription</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="clear"></div>
+<script type="text/javascript">  
+  var dataArray = [];
+
+  for (var i = 0; i < 13; i++) {
+    dataArray.push([2000+i, Math.random() * 11]);
+  }
+
+  var data = [{
+    label: "Yearly increase",
+    data: dataArray
+  }];
+
+  var options = {
+    legend: {
+      show: true
+    },
+    bars: {
+      show: true
+    },
+    grid: {
+      borderWidth: 0
+    },
+    xaxis: {
+      tickSize: 1
+    },
+    yaxis: {
+      tickSize: 1,
+      tickDecimals: 0
+    }
+  };
+
+  $('document').ready(function() {
+    $.plot($("#jflot"), data, options);
+  });
+</script>
+
+<div class="box">
+  <div class="box-header">
+    <h1>Bar Chart</h1>
+  </div>
+
+  <div class="box-content">
+    <div id="jflot" style="width: 100%; height: 300px">
+    </div>
+  </div>
+
+</div>
+
+</div>
 hello {{request.user.username}}, you've used {{used|floatformat:2}} MB of your {{quota}} MB quota.<br/>
 you may: <a href="{% url pwchange %}">change password</a>, <a href="{% url logout %}">logout</a>
 {% endblock %}

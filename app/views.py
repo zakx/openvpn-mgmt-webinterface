@@ -17,18 +17,21 @@ def welcome_view(request):
 	used = float(request.user.get_profile().used_traffic)/1024/1024
 	if request.user.get_profile().max_traffic == -1:
 		quota = "unlimited"
+		used_percentage = False
 	else:
 		quota = float(request.user.get_profile().max_traffic)/1024/1024
+		used_percentage = round(used/quota*100)
 	return render_to_response("welcome.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def status_view(request):
 	if not request.user.is_staff:
 		raise Http404()
-	tn = mgmtlib.connect()
-	status = mgmtlib.get_status(tn)
-	mgmtlib.quit(tn)
-	status = mgmtlib.parse_status(status)
+	mgmt = mgmtlib.OpenVPNManager()
+	mgmt.connect()
+	status = mgmt.get_status()
+	mgmt.quit()
+	status = mgmt.parse_status(status)
 	users = status['users']
 	sessions = Connection.objects.filter(time_end=None)
 	userlist = User.objects.all()
