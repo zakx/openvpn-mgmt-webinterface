@@ -1,0 +1,19 @@
+#rotatedevice {
+  background: rgba(0, 0, 0, .8);
+  bottom: 0;
+  display: block;
+  left: 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  z-index: 99999999999999;
+}
+
+#rotatedevice h1 {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 350px;
+  text-shadow: 0 1px 3px #000;
+}

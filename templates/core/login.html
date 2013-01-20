@@ -1,35 +1,69 @@
-{% extends "core/base.html" %}
-
-{% block content %}
-<h1>Log In</h1>
-<form method="post" action=".">{% csrf_token %}<input type="hidden" name="next" value="{{ next|default:"/" }}" />
-	<table cellpadding="4" cellspacing="1">
-		<tr>
-			<td>Username:</td>
-			<td> 
-				{% if form.errors %}
-				<div style="background-color:#B00;border:2px solid #F00;width:200px;margin-bottom: 10px;padding:3px;text-align:center;">
-					<strong>login failure</strong><br/>
-					login failed, please retry.
-				</div>
-				{% endif %}
-				<input type="text" class="styledform" name="username" id="username" maxlength="255" /> 
-			</td>
-		</tr> 
-		<tr>
-			<td>Password:</td>
-			<td> 
-				<input type="password" class="styledform" name="password" id="password" maxlength="255" /> 
-			</td>
-		</tr> 
-		<tr>
-			<td>&nbsp;</td>
-			<td> 
-				<input type="submit" id="submit-unnamed" name="unnamed" value="Login" class="sub lock" /> 
-			</td>
-		</tr> 
-	</table> 
-	</form>
-</form>
-{% endblock %}
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="user-scalable=no" />
+    
+    <title>Spina</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/reset.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/icons.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/formalize.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/checkboxes.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/sourcerer.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/jqueryui.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/tipsy.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/calendar.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/tags.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/selectboxes.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/960.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/main.css" />
+    <link rel="stylesheet" media="all and (orientation:portrait)" href="{{MEDIA_URL}}css/portrait.css" />
+    
+    <!--[if lt IE 9]>
+    <script src="{{MEDIA_URL}}js/html5shiv.js"></script>
+    <script src="{{MEDIA_URL}}js/excanvas.js"></script>
+    <![endif]-->
+    
+    <!-- JavaScript -->
+    <script src="{{MEDIA_URL}}js/jquery.min.js"></script>
+    <script src="{{MEDIA_URL}}js/jqueryui.min.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.cookies.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.pjax.js"></script>
+    <script src="{{MEDIA_URL}}js/formalize.min.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.metadata.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.validate.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.checkboxes.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.chosen.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.fileinput.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.datatables.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.sourcerer.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.tipsy.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.calendar.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.inputtags.min.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.wymeditor.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.livequery.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.flot.min.js"></script>
+    <script src="{{MEDIA_URL}}js/application.js"></script>
+  </head>
+  
+  <body id="login">
+  
+    <div id="login_container">
+      <div id="login_form">
+        <form method="post" action="">{% csrf_token %}<input type="hidden" name="next" value="{{ next|default:"/" }}" />
+          <p>
+            <input type="text" id="username" name="username" placeholder="Username" class="{validate: {required: true}}" />
+          </p>
+          <p>
+            <input type="password" id="password" name="password" placeholder="Password" class="{validate: {required: true}}" />
+          </p>
+          <button type="submit" class="button blue">Login</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

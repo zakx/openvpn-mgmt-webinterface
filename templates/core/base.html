@@ -1,17 +1,119 @@
-<html>
-<head>
-<title>vpnadm</title>
-<style type="text/css">
-td {
-	text-align: center;
-	padding-left: 5px;
-	padding-right: 5px;
-}
-</style>
-</head>
-<body>
-<h1>vpnadm</h1>
-<div id="nav" style="margin-top: -20px;margin-bottom: 20px;font-family:monospace;">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=1024px, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <title>purple OpenVPN administration</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/reset.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/icons.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/formalize.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/checkboxes.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/sourcerer.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/jqueryui.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/tipsy.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/calendar.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/tags.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/selectboxes.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/960.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}css/main.css" />
+    <link rel="stylesheet" media="all and (orientation:portrait)" href="{{MEDIA_URL}}css/portrait.css" />
+    
+    <!--[if lt IE 9]>
+    <script src="{{MEDIA_URL}}js/html5shiv.js"></script>
+    <script src="{{MEDIA_URL}}js/excanvas.js"></script>
+    <![endif]-->
+    
+    <!-- JavaScript -->
+    <script src="{{MEDIA_URL}}js/jquery.min.js"></script>
+    <script src="{{MEDIA_URL}}js/jqueryui.min.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.cookies.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.pjax.js"></script>
+    <script src="{{MEDIA_URL}}js/formalize.min.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.metadata.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.validate.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.checkboxes.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.chosen.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.fileinput.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.datatables.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.sourcerer.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.tipsy.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.calendar.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.inputtags.min.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.wymeditor.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.livequery.js"></script>
+    <script src="{{MEDIA_URL}}js/jquery.flot.min.js"></script>
+    <script src="{{MEDIA_URL}}js/application.js"></script>
+  </head>
+  
+  <body>
+
+    <!-- Primary navigation -->
+    <nav id="primary">
+      <ul>
+        <li class="active">
+          <a href="#">
+            <span class="icon32 dashboard"></span>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="icon32 shuffle"></span>
+            UI Elements
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="icon32 pencil"></span>
+            Forms
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="icon32 listicon"></span>
+            Tables
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="icon32 chart"></span>
+            Charts
+          </a>
+        </li>
+        <li class="bottom">
+          <a href="#">
+            <span class="icon32 quit"></span>
+            Log out
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- Secondary navigation -->
+    <nav id="secondary">
+      
+      <div id="notifications">
+        <ul>
+        </ul>
+      </div>
+    </nav>
+    
+    <section id="maincontainer">
+      <div id="main" class="container_12">
+      
+        {% block content %}{% endblock %}
+      
+      </div>
+    </section>
+  </body>
+</html>
+{% comment %}
 	<a href="{% url welcome %}">start</a> |
 	{% if request.user.is_staff %}
 	<a href="{% url status %}">status</a> |
@@ -19,5 +121,4 @@ td {
 	{% endif %}
 	<a href="{% url pwchange %}">change password</a> |
 	<a href="{% url logout %}">logout</a>
-</div>
-{% block content %}{% endblock %}
+{% endcomment %}

@@ -1,0 +1,79 @@
+@charset "utf-8";
+
+/*******************************************************/
+/* Sourcerer Code Viewer CSS v.1.1
+/* Author: Anson Airoldi
+/* Email:  greatunknown@andbeyonddesign.com
+/* Site:   http://www.andbeyonddesign.com
+/*******************************************************/
+
+
+.SRC_Wrap {
+  color: #000;
+  font-size: 12px;
+  height:auto;
+}
+
+.box-content .SRC_Wrap {
+  margin: -14px;
+}
+
+.SRC_Line {
+  background-color: #FFF;
+  min-height: 24px;
+  width: 100%;
+}
+
+.SRC_Line:nth-child(odd) {
+  background-color: #f9f9f9;    
+}
+
+.SRC_Line:last-child {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.SRC_NumBox {
+  float: left;
+  width: 5%;
+}
+
+.SRC_CodeContent {
+  border-left: 1px solid #ddd;
+  font-size: 12px;
+  font-family: "Courier New", Courier, monospace;
+  line-height: 24px;
+  margin: 0px;
+  min-height: 24px;
+  padding-left: 6px;
+  white-space: pre-wrap;
+}
+
+.SRC_NumContent {
+  color: #aaa;
+  line-height: 24px;
+  margin-right:4px;
+  text-align:right;
+}
+
+.SRC_CodeBox {
+  float:left;
+  width:95%;
+}
+
+
+/*************************************************/
+/* HIGHLIGHT COLORS:                             
+/* These speak for themselves, change each color 
+/* according to your personal preference         
+/*************************************************/
+.SC_blue { color:blue; }
+.SC_grey { color:grey; }
+.SC_navy { color:navy; }
+.SC_green { color:green; }
+.SC_orange { color:#930; }
+.SC_red { color:#F00; }
+.SC_teal { color:teal; }
+.SC_gold { color:#FC0; }
+.SC_pink { color:#ff68a4; }
+.SC_bold { font-weight:700; }
