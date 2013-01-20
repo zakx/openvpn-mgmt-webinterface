@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 import datetime
 import os
 import socket
-from purple.app.models import *
+from app.models import *
 import mgmtlib
 
 @login_required

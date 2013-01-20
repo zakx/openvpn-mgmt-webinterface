@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.contrib import auth
 from django.conf import settings
-from purple.app.models import *
+from app.models import *
 from django.contrib import admin
 admin.autodiscover()
 
@@ -16,7 +16,7 @@ urlpatterns = patterns('django.contrib.auth.views',
 	url(r'^accounts/pwreset/complete/$', 'password_reset_complete', {'template_name': 'core/pwreset_complete.html'}, name="pwreset-complete"),
 )
 
-urlpatterns += patterns('purple.app.views',
+urlpatterns += patterns('app.views',
 	url(r'^$', 'welcome_view', name='welcome'),
 	url(r'^status/$', 'status_view', name='status'),
 	url(r'^user/(?P<user_id>(\d+))/kill/$', 'kill_action', name="kill"),
