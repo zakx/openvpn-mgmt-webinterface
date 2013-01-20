@@ -1,3 +1,4 @@
 *.pyc
 settings.py
 *.sqlite3
+.DS_Store
