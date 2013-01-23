@@ -5,7 +5,7 @@ DEBUG = False
 BASE_PATH = '/opt/purple/' # set this to your base path
 DATABASES = {
     'default': {
-        'NAME': 'purple.sqlite3',
+        'NAME': BASE_PATH+'purple.sqlite3',
         'ENGINE': 'django.db.backends.sqlite3',
     }
 }
