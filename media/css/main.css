@@ -1253,6 +1253,10 @@ table.fc-content .fc-event .fc-event-skin {
   padding: 2px 4px;
 }
 
+tr.center > td, tr.center > th {
+  text-align: center;
+}
+
 /* Styles */
 
 a {
@@ -1292,6 +1296,10 @@ input {
 
 strong {
   font-weight: bold;
+}
+
+small {
+  font-size: xx-small;
 }
 
 .red {
