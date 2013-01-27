@@ -5,8 +5,7 @@ import settings
 setup_environ(settings)
 
 from django.db import connection
-#from django.contrib.auth.models import User
-from purple.app.models import *
+from app.models import *
 
 import os
 import sys
