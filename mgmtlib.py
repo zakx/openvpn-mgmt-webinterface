@@ -2,6 +2,8 @@ import sys
 import telnetlib
 import socket
 import settings
+import dateutil.parser
+import datetime
 
 class ConnectionError(Exception):
 	pass
@@ -58,7 +60,7 @@ class OpenVPNManager():
 		return self.logged_in
 
 	@connection_required
-	def get_status(self):
+	def _get_status(self):
 		self.send("status 2")
 		status = self.connection.read_until("END", 2)
 		return status
@@ -76,16 +78,35 @@ class OpenVPNManager():
 		self.logged_in = False
 
 	@connection_required
-	def parse_status(self, status):
+	def get_status(self):
+		status = self._get_status()
 		stati = status.split("\r\n")
 		users = []
 		routes = []
 		for i,line in enumerate(stati[3:]):
 			if line[:6] == "HEADER":
 				break
-			users.append(line.split(",")[1:])
+			linedata = line.split(",")[1:]
+			users.append({
+				"username": linedata[0],
+				"source_socket": linedata[1],
+				"source_ip": linedata[1].split(":", 1)[0],
+				"vpn_ip": linedata[2],
+				"bytes_rx": linedata[3],
+				"bytes_tx": linedata[4],
+				"connected_at": dateutil.parser.parse(linedata[5]),
+				"connected_for": datetime.datetime.now() - dateutil.parser.parse(linedata[5])
+				})
 		for j,line in enumerate(stati[(4+i):]):
 			if line[:6] == "GLOBAL":
 				break
-			routes.append(line.split(",")[1:])
+			linedata = line.split(",")[1:]
+			routes.append({
+				"vpn_ip": linedata[0],
+				"username": linedata[1],
+				"source_socket": linedata[2],
+				"source_ip": linedata[2].split(":", 1)[0],
+				"last_ref_at": dateutil.parser.parse(linedata[3]),
+				"last_ref_for": datetime.datetime.now() - dateutil.parser.parse(linedata[3])
+				})
 		return {'users': users, 'routes': routes}

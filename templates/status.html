@@ -1,81 +1,122 @@
 {% extends "core/base.html" %}
-
+{% load apptags %}
+{% block nav_status %}class="active"{% endblock %}
 {% block content %}
-<h3>Sessions</h3>
-<table>
-<tr>
-	<th>username</th>
-	<th>source</th>
-	<th>vpn ip</th>
-	<th>rx</th>
-	<th>tx</th>
-	<th>since</th>
-	<th>since (time_t)</th>
-</tr>
-{% for line in users %}
-<tr>
-	<td>{{ line.0 }}</td>
-	<td>{{ line.1 }}</td>
-	<td>{{ line.2 }}</td>
-	<td>{{ line.3|filesizeformat }}</td>
-	<td>{{ line.4|filesizeformat }}</td>
-	<td>{{ line.5 }}</td>
-	<td>{{ line.6 }}</td>
-	<td>kill</td>
-	<td>ban</td>
-</tr>
-{% empty %}
-<tr>
-	<td colspan="">no connected users</td>
-</tr>
-{% endfor %}
-</table>
+<div class="box">
+	<div class="box-header">
+		<h1>OpenVPN Sessions</h1>
+	</div>
 
-<h3>Connections</h3>
-<table>
-<tr>
-	<th>user</th>
-	<th>vpn ip</th>
-	<th>start</th>
-	<th>connected for</th>
-	<th>tx</th>
-	<th>rx</th>
-	<th>total <small>(all time)</small></th>
-	<th>quota</th>
-</tr>
-{% for line in sessions %}
-<tr>
-	<td>{{line.user.username}}</td>
-	<td>{{line.vpn_ip}}</td>
-	<td>{{line.time_start|date:"d.m.Y H:i:s"}}</td>
-	<td>{{line.time_start|timesince}}</td>
-	<td>{{line.traffic_sent|filesizeformat}}</td>
-	<td>{{line.traffic_recv|filesizeformat}}</td>
-	<td>{{line.user.get_profile.used_traffic|filesizeformat}}</td>
-	<td>{{line.user.get_profile.max_traffic|filesizeformat}}</td>
-</tr>
-{% empty %}
-<tr>
-	<td colspan="">no connected users</td>
-</tr>
-{% endfor %}
-</table>
+	<table>
+		<thead>
+			<tr class="center">
+				<th>Username</th>
+				<th>Source IP</th>
+				<th>VPN IP</th>
+				<th>rx</th>
+				<th>tx</th>
+				<th>Connected since</th>
+				<th colspan="2">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for line in users %}
+			<tr class="center">
+				<td>{{ line.username}}</td>
+				<td>
+					{{ line.source_ip }}<br />
+					<small>{{ line.source_ip|rdns }}</small>
+				</td>
+				<td>{{ line.vpn_ip }}</td>
+				<td>{{ line.bytes_rx|filesizeformat }}</td>
+				<td>{{ line.bytes_tx|filesizeformat }}</td>
+				<td>
+					{{ line.connected_at|timesince }}<br />
+					<small>{{ line.connected_at|date:"d.m.Y H:i:s" }}</small>
+				</td>
+				<td>
+					<a href="" class="button plain"><span class="icon16 info"></span> info</a>
+					<a href="" class="button plain"><span class="icon16 cross"></span> disconnect</a>
+					<a href="" class="button plain"><span class="icon16 blocked"></span>ban</a>
+				</td>
+			</tr>
+			{% empty %}
+			<tr>
+				<td colspan="">no connected users</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 
-<h3>Users</h3>
-<table>
-<tr>
-	<th>user</th>
-	<th>banned</th>
-	<th>total</th>
-	<th>quota</th>
-</tr>
-{% for u in userlist %}
-<tr>
-	<td>{{ u.username }}</td>
-	<td>{{ u.get_profile.banned }}</td>
-	<td>{{ u.get_profile.used_traffic|filesizeformat }}</td>
-	<td>{{ u.get_profile.max_traffic|filesizeformat }}</td>
-</tr>
-{% endfor %}
-</table>
+<div class="box">
+	<div class="box-header">
+		<h1>Managed Sessions</h1>
+	</div>
+	<table>
+		<thead>
+			<tr class="center">
+				<th>Username</th>
+				<th>VPN IP</th>
+				<th>connected for</th>
+				<th>tx</th>
+				<th>rx</th>
+				<th>total <small>(all time)</small></th>
+				<th>quota</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for line in sessions %}
+			<tr class="center">
+				<td>{{line.user.username}}</td>
+				<td>{{line.vpn_ip}}</td>
+				<td>
+					{{line.time_start|timesince}}<br />
+					<small>{{line.time_start|date:"d.m.Y H:i:s"}}</small>
+				</td>
+				<td>{{line.traffic_sent|filesizeformat}}</td>
+				<td>{{line.traffic_recv|filesizeformat}}</td>
+				<td>{{line.user.get_profile.used_traffic|filesizeformat}}</td>
+				<td>{{line.user.get_profile.max_traffic|filesizeformat}}</td>
+			</tr>
+			{% empty %}
+			<tr class="center">
+				<td colspan="7">no connected users</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<div class="box">
+	<div class="box-header">
+		<h1>Users</h1>
+	</div>
+	<table>
+		<thead>
+			<tr class="center">
+				<th>Username</th>
+				<th>Quota</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for u in userlist %}
+			<tr class="center">
+				<td>
+					{{ u.username }}
+					{% if u.get_profile.banned %}(<strong>Banned</strong>){% endif %}
+				</td>
+				<td>
+					{{ u.get_profile.used_traffic|filesizeformat }}/{{ u.get_profile.max_traffic|filesizeformat }}
+				</td>
+				<td>
+					<a href="" class="button plain"><span class="icon16 info"></span> info</a>
+					<a href="" class="button plain"><span class="icon16 cross"></span> disconnect</a>
+					<a href="" class="button plain"><span class="icon16 blocked"></span>ban</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 {% endblock %}

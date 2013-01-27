@@ -35,7 +35,6 @@ def status_view(request):
 	mgmt.connect()
 	status = mgmt.get_status()
 	mgmt.quit()
-	status = mgmt.parse_status(status)
 	users = status['users']
 	sessions = Connection.objects.filter(time_end=None)
 	userlist = User.objects.all()
