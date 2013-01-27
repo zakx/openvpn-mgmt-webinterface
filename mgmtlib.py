@@ -11,9 +11,9 @@ class OpenVPNManager():
 	logged_in = False
 
 	def connection_required(func):
-		def wrapped():
+		def wrapped(self, *args, **kwargs):
 			if self.connection and self.logged_in:
-				return func()
+				return func(self, *args, **kwargs)
 			else:
 				return
 		return wrapped
