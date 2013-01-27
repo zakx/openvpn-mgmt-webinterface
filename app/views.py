@@ -20,7 +20,11 @@ def welcome_view(request):
 		used_percentage = False
 	else:
 		quota = float(request.user.get_profile().max_traffic)/1024/1024
-		used_percentage = round(used/quota*100)
+		if quota == 0:
+			used_percentage = 0
+		else:
+			used_percentage = round(used/quota*100)
+	connection_count = Connection.objects.filter(user=request.user).count()
 	return render_to_response("welcome.html", locals(), context_instance=RequestContext(request))
 
 @login_required
